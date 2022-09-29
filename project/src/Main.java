@@ -27,25 +27,36 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
 
-        JButton buttonLeft = new JButton("Links");
-        JButton buttonCenter = new JButton("Mitte");
-        JButton buttonRight = new JButton("Rechts");
+        JLabel formTitle = new JLabel("Gruppeneinteilung Pro");
+        JButton buttonLeft = new JButton("Gruppenaufteilung");
+        JButton buttonCenter = new JButton("Gruppe laden");
+        JButton buttonRight = new JButton("Verwaltung");
 
         GridBagConstraints frameGridConstraints = new GridBagConstraints();
 
-        frameGridConstraints.weightx = 0.5;
-        frameGridConstraints.gridx = 0;
-        frameGridConstraints.gridy = 0;
-        frame.add(buttonLeft, frameGridConstraints);
-
-        frameGridConstraints.weightx = 0.5;
+        frameGridConstraints.weighty = 0.1;
         frameGridConstraints.gridx = 1;
         frameGridConstraints.gridy = 0;
+        formTitle.setFont(new Font("Arial", Font.PLAIN, 36));
+        frame.add(formTitle, frameGridConstraints);
+
+        frameGridConstraints.weighty = 0.1;
+        frameGridConstraints.gridx = 0;
+        frameGridConstraints.gridy = 1;
+        buttonLeft.setPreferredSize(new Dimension(200, 50));
+        frame.add(buttonLeft, frameGridConstraints);
+
+        frameGridConstraints.weighty = 0.1;
+        frameGridConstraints.weightx = 0;
+        frameGridConstraints.gridx = 1;
+        frameGridConstraints.gridy = 1;
+        buttonCenter.setPreferredSize(new Dimension(200, 50));
         frame.add(buttonCenter, frameGridConstraints);
 
-        frameGridConstraints.weightx = 0.5;
+        frameGridConstraints.weightx = 0;
         frameGridConstraints.gridx = 2;
-        frameGridConstraints.gridy = 0;
+        frameGridConstraints.gridy = 1;
+        buttonRight.setPreferredSize(new Dimension(200, 50));
         frame.add(buttonRight, frameGridConstraints);
     }
 }
