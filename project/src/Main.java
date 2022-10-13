@@ -172,7 +172,7 @@ public class Main {
             showMainMenu();
             frameLogIn.dispose();
         }else{
-            JOptionPane.showMessageDialog(null, "Falsche Login-Daten!" + passwordFull ,"Fehler", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Falsche Login-Daten!","Fehler", JOptionPane.ERROR_MESSAGE);
         }
     }
 
