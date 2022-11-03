@@ -29,7 +29,8 @@ public class Main {
 
         frameLogIn.setSize(500, 200);
         frameLogIn.setResizable(false);
-        frameLogIn.setTitle("Login");
+        frameLogIn.setIconImage(new ImageIcon(getClass().getResource("Gruppeneinteilung_Icon.png")).getImage());
+        frameLogIn.setTitle("Gruppeneinteilung - Login");
         frameLogIn.setLocationRelativeTo(null);
         frameLogIn.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frameLogIn.setLayout(new GridBagLayout());
@@ -39,13 +40,33 @@ public class Main {
         JTextField usernameInput = new JTextField();
         JLabel passwordLabel = new JLabel("Password:", SwingConstants.CENTER);
         JPasswordField passwordInput = new JPasswordField();
-        JButton submitButton = new JButton("Login");
-        JButton resetButton = new JButton("Zurücksetzen");
+        JButton submitButton = new JButton("Anmelden");
+        JButton resetButton = new JButton("Zurücksetzten");
+
+        usernameInput.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkCredentials(usernameInput.getText(), passwordInput);
+            }
+        });
+        passwordInput.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                checkCredentials(usernameInput.getText(), passwordInput);
+            }
+        });
 
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 checkCredentials(usernameInput.getText(), passwordInput);
+            }
+        });
+
+        resetButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                resetCredentials();
             }
         });
 
@@ -62,6 +83,7 @@ public class Main {
         frameGridConstraints.gridy = 0;
         frameLogIn.add(formTitle, frameGridConstraints);
 
+        usernameLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         frameGridConstraints.gridwidth = 1;
         frameGridConstraints.anchor = GridBagConstraints.CENTER;
         frameGridConstraints.weightx = 0.5;
@@ -70,6 +92,7 @@ public class Main {
         frameGridConstraints.gridy = 2;
         frameLogIn.add(usernameLabel, frameGridConstraints);
 
+        usernameInput.setFont(new Font("Arial", Font.PLAIN, 14));
         frameGridConstraints.anchor = GridBagConstraints.CENTER;
         frameGridConstraints.weightx = 2;
         frameGridConstraints.weighty = 1;
@@ -77,6 +100,7 @@ public class Main {
         frameGridConstraints.gridy = 2;
         frameLogIn.add(usernameInput, frameGridConstraints);
 
+        passwordLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         frameGridConstraints.anchor = GridBagConstraints.CENTER;
         frameGridConstraints.weightx = 0.5;
         frameGridConstraints.weighty = 1;
@@ -84,6 +108,7 @@ public class Main {
         frameGridConstraints.gridy = 3;
         frameLogIn.add(passwordLabel, frameGridConstraints);
 
+        passwordInput.setFont(new Font("Arial", Font.PLAIN, 14));
         frameGridConstraints.anchor = GridBagConstraints.CENTER;
         frameGridConstraints.weightx = 2;
         frameGridConstraints.weighty = 1;
@@ -92,16 +117,16 @@ public class Main {
         frameLogIn.add(passwordInput, frameGridConstraints);
 
         frameGridConstraints.fill = GridBagConstraints.HORIZONTAL;
-        frameGridConstraints.ipady = 10;
+        frameGridConstraints.ipady = 5;
         frameGridConstraints.gridx = 0;
         frameGridConstraints.gridy = 4;
-        frameLogIn.add(submitButton, frameGridConstraints);
+        frameLogIn.add(resetButton, frameGridConstraints);
 
         frameGridConstraints.fill = GridBagConstraints.HORIZONTAL;
-        frameGridConstraints.ipady = 10;
+        frameGridConstraints.ipady = 5;
         frameGridConstraints.gridx = 1;
         frameGridConstraints.gridy = 4;
-        frameLogIn.add(resetButton, frameGridConstraints);
+        frameLogIn.add(submitButton, frameGridConstraints);
 
         frameLogIn.setVisible(true);
     }
@@ -111,7 +136,8 @@ public class Main {
 
         frame.setSize(800, 600);
         frame.setResizable(false);
-        frameLogIn.setTitle("Gruppeneinteilung");
+        frame.setIconImage(new ImageIcon(getClass().getResource("Gruppeneinteilung_Icon.png")).getImage());
+        frame.setTitle("Gruppeneinteilung - Übersicht");
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
@@ -167,12 +193,30 @@ public class Main {
             passwordFull = passwordFull + passwordChar;
         }
 
-        // Password check via database still needs to be implemented
-        if(username.equals("Test") && passwordFull.equals("1234")) {
-            showMainMenu();
-            frameLogIn.dispose();
+        if(username.trim().equals("") || passwordFull.trim().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Bitte Login-Daten vollständig ausfüllen.","Fehler", JOptionPane.ERROR_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(null, "Falsche Login-Daten!","Fehler", JOptionPane.ERROR_MESSAGE);
+            // Password check via database still needs to be implemented
+            if(username.equals("Test") && passwordFull.equals("1234")) {
+                showMainMenu();
+                frameLogIn.dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "Falscher Benutzername oder falsches Passwort.","Fehler", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void resetCredentials()
+    {
+        String username = JOptionPane.showInputDialog(null, "Bitte geben Sie den Benutzernamen des betreffenden Accounts an:", "Passwort zurücksetzen", JOptionPane.INFORMATION_MESSAGE);
+
+        if(username.trim().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Sie müssen einen Benutzernamen angeben.","Fehler", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Dem betreffenden Account wird eine Mail mit einem neuen Passwort gesendet, sofern dieser existiert.","Information", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
