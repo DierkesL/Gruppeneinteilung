@@ -12,7 +12,7 @@ public class Main {
                 new Runnable() {
                     public void run() {
                         frameHandler.startApplication(mainFrame);
-                        db.test();
+                        db.testQuery();
                     }
                 }
         );
