@@ -1,5 +1,7 @@
 import org.json.JSONObject;
 import org.postgresql.ds.PGSimpleDataSource;
+
+import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
 import java.io.*;
 import java.net.URISyntaxException;
@@ -10,13 +12,13 @@ import java.sql.SQLException;
 
 public class BaseDAO {
 
-    public DataSource createDataSource(JSONObject configDatabase) {
+    public DataSource createDataSource(String user, String password, JSONObject configDatabase) {
         PGSimpleDataSource ds = new PGSimpleDataSource();
         ds.setUrl(configDatabase.get("db_url").toString());
         ds.setPortNumber((int)configDatabase.get("db_port"));
         ds.setDatabaseName(configDatabase.get("db_name").toString());
-        ds.setUser(configDatabase.get("db_user").toString());
-        ds.setPassword(configDatabase.get("db_password").toString());
+        ds.setUser(user);
+        ds.setPassword(password);
         ds.setSslMode(configDatabase.get("db_sslmode").toString());
 
         try{
@@ -24,18 +26,19 @@ public class BaseDAO {
                 System.out.println();
                 return ds;
             } else {
-                System.out.println("Error: DB Connection failed.");
+                System.out.println("Error: DB Connection failed");
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ex) {
+            throw new RuntimeErrorException(new Error(), ex.getMessage());
         }
 
         return null;
     }
 
     public void testQuery() {
+        /*
         try {
-            DataSource ds = createDataSource(new ApplicationConfig().getConfigJSON(getClass().getResource("config.json").toURI(), "database"));
+           DataSource ds = createDataSource(new ApplicationConfig().getConfigJSON(getClass().getResource("config.json").toURI(), "database"));
 
             Connection conn = ds.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM schueler");
@@ -44,8 +47,10 @@ public class BaseDAO {
             while(rs.next()) {
                 System.out.println(rs.getString("vorname"));
             }
+
         } catch(SQLException | URISyntaxException ex) {
             System.out.println(ex);
         }
+        */
     }
 }
