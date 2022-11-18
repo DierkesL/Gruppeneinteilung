@@ -1,11 +1,14 @@
+import javax.sql.DataSource;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URISyntaxException;
 
 public class FrameHandling {
 
     JFrame frameLogIn = new JFrame();
+    SessionController sessionController = new SessionController();
 
     public void startApplication(JFrame targetFrame) {
         Main main = new Main();
@@ -178,18 +181,22 @@ public class FrameHandling {
     private void checkCredentials(JFrame targetFrame, String username, JPasswordField password) {
         String passwordFull = "";
 
-        for(char passwordChar : password.getPassword()) {
+        for (char passwordChar : password.getPassword()) {
             passwordFull = passwordFull + passwordChar;
         }
 
-        if(username.trim().equals("") || passwordFull.trim().equals("")) {
-            JOptionPane.showMessageDialog(null, "Bitte Login-Daten vollständig ausfüllen.","Fehler", JOptionPane.ERROR_MESSAGE);
-        }else{
-            // Password check via database still needs to be implemented
-            if(username.equals("Test") && passwordFull.equals("1234")) {
+        try {
+            if(sessionController.initializeSession(username, passwordFull)) {
                 showMainMenu(targetFrame);
-            }else{
+            } else {
+                JOptionPane.showMessageDialog(null, "Session konnte nicht erstellt werden.", "Fehler", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch(Exception ex) {
+            if(ex.getMessage().contains("ERROR: password authentication failed for user")) {
                 JOptionPane.showMessageDialog(null, "Falscher Benutzername oder falsches Passwort.","Fehler", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "Es ist ein unbekannter Fehler aufgetreten.","Fehler", JOptionPane.ERROR_MESSAGE);
+                System.out.println(ex.getMessage());
             }
         }
     }

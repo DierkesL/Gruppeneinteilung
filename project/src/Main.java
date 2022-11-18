@@ -1,3 +1,4 @@
+import javax.sql.DataSource;
 import javax.swing.*;
 import java.awt.*;
 import java.net.URISyntaxException;
@@ -13,13 +14,6 @@ public class Main {
                 new Runnable() {
                     public void run() {
                         frameHandler.startApplication(mainFrame);
-                        db.testQuery();
-
-                        try {
-                            System.out.println(new ApplicationConfig().getConfigJSON(getClass().getResource("config.json").toURI(), "default").toString());
-                        } catch (URISyntaxException e) {
-                            throw new RuntimeException(e);
-                        }
                     }
                 }
         );
