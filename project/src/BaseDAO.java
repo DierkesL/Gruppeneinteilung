@@ -1,6 +1,5 @@
 import org.json.JSONObject;
 import org.postgresql.ds.PGSimpleDataSource;
-
 import javax.sql.DataSource;
 import java.io.*;
 import java.net.URISyntaxException;
@@ -10,33 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BaseDAO {
-
-    public JSONObject readConfigJSON() {
-        try {
-            File configFile = new File(getClass().getResource("config.json").toURI());
-            BufferedReader buffer = new BufferedReader(new FileReader(configFile));
-            String configFileContent = "";
-            String bufferString = "";
-
-            while((bufferString = buffer.readLine()) != null) {
-                if(configFileContent != "") {
-                    configFileContent += "\n" + bufferString;
-                }else{
-                    configFileContent += bufferString;
-                }
-            }
-
-            return new JSONObject(configFileContent);
-        } catch(IOException | URISyntaxException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-        return null;
-    }
-
-    public JSONObject getConfigDatabaseCredentials(JSONObject configJSON) {
-        return new JSONObject(configJSON.get("database").toString());
-    }
 
     public DataSource createDataSource(JSONObject configDatabase) {
         PGSimpleDataSource ds = new PGSimpleDataSource();
@@ -62,9 +34,9 @@ public class BaseDAO {
     }
 
     public void testQuery() {
-        DataSource ds = createDataSource(getConfigDatabaseCredentials(readConfigJSON()));
-
         try {
+            DataSource ds = createDataSource(new ApplicationConfig().getConfigJSON(getClass().getResource("config.json").toURI(), "database"));
+
             Connection conn = ds.getConnection();
             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM schueler");
             ResultSet rs = stmt.executeQuery();
@@ -72,7 +44,7 @@ public class BaseDAO {
             while(rs.next()) {
                 System.out.println(rs.getString("vorname"));
             }
-        } catch(SQLException ex) {
+        } catch(SQLException | URISyntaxException ex) {
             System.out.println(ex);
         }
     }

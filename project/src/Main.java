@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.net.URISyntaxException;
 
 public class Main {
 
@@ -13,6 +14,12 @@ public class Main {
                     public void run() {
                         frameHandler.startApplication(mainFrame);
                         db.testQuery();
+
+                        try {
+                            System.out.println(new ApplicationConfig().getConfigJSON(getClass().getResource("config.json").toURI(), "default").toString());
+                        } catch (URISyntaxException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }
         );
