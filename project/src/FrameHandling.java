@@ -142,9 +142,12 @@ public class FrameHandling {
         buttonLeft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //JOptionPane.showMessageDialog(null,e.getActionCommand().toString() ,"LOL", JOptionPane.INFORMATION_MESSAGE);
-                //showGruppeneinteilung();
-                showGruppeneinteilung();
+                if(SessionController.validateSession() == true) {
+                    showGruppeneinteilung();
+                }else{
+                    JOptionPane.showMessageDialog(null, "Ungültige Sitzung, bitte erneut anmelden.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    showLogIn(targetFrame);
+                }
             }
         });
 
@@ -213,7 +216,6 @@ public class FrameHandling {
     }
 
     private void showGruppeneinteilung() {
-        // Code from Lucas here when ready
-
+        // Add code for form "Gruppeneinteilung" here
     }
 }

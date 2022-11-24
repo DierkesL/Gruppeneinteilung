@@ -1,7 +1,9 @@
 import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
+import java.sql.SQLException;
+
 public class SessionController {
-    public DataSource SessionDataSource = null;
+    public static DataSource SessionDataSource = null;
 
     public boolean initializeSession(String username, String password) {
         username = username.trim();
@@ -22,7 +24,21 @@ public class SessionController {
         return false;
     }
 
-    public void destroySession() {
+    public static boolean validateSession() {
+        try {
+            if(SessionDataSource != null) {
+                if(SessionDataSource.getConnection() != null) {
+                    return true;
+                }
+            }
+        }catch(Exception ex) {
+            return false;
+        }
+
+        return false;
+    }
+
+    public static void destroySession() {
         SessionDataSource = null;
     }
 
