@@ -1,1 +1,3 @@
 /out/
+.env
+/project/resources/config.json
