@@ -12,6 +12,13 @@ public class FrameHandling {
 
     public void startApplication(JFrame targetFrame) {
         Main main = new Main();
+
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
         targetFrame.setVisible(true);
         showLogIn(targetFrame);
     }
@@ -19,7 +26,7 @@ public class FrameHandling {
     private void showLogIn(JFrame targetFrame) {
         targetFrame.getContentPane().removeAll();
 
-        targetFrame.setSize(500, 200);
+        targetFrame.setSize(500, 250);
         targetFrame.setResizable(false);
         targetFrame.setIconImage(new ImageIcon(getClass().getResource("Gruppeneinteilung_Icon.png")).getImage());
         targetFrame.setTitle("Gruppeneinteilung - Login");
@@ -30,10 +37,10 @@ public class FrameHandling {
         JLabel formTitle = new JLabel("Gruppeneinteilung Login", SwingConstants.CENTER);
         JLabel usernameLabel = new JLabel("Benutzername:", SwingConstants.CENTER);
         JTextField usernameInput = new JTextField();
-        JLabel passwordLabel = new JLabel("Password:", SwingConstants.CENTER);
+        JLabel passwordLabel = new JLabel("Passwort:", SwingConstants.CENTER);
         JPasswordField passwordInput = new JPasswordField();
         JButton submitButton = new JButton("Anmelden");
-        JButton resetButton = new JButton("Zurücksetzten");
+        JButton resetButton = new JButton("Zurücksetzen");
 
         usernameInput.addActionListener(new ActionListener() {
             @Override
@@ -73,12 +80,13 @@ public class FrameHandling {
         frameGridConstraints.fill = GridBagConstraints.HORIZONTAL;
         frameGridConstraints.gridx = 0;
         frameGridConstraints.gridy = 0;
+        frameGridConstraints.insets.set(10, 0, 15, 0);
         targetFrame.add(formTitle, frameGridConstraints);
 
         usernameLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         frameGridConstraints.gridwidth = 1;
-        frameGridConstraints.anchor = GridBagConstraints.CENTER;
-        frameGridConstraints.weightx = 0.5;
+        //frameGridConstraints.anchor = GridBagConstraints.WEST;
+        frameGridConstraints.weightx = 1;
         frameGridConstraints.weighty = 1;
         frameGridConstraints.gridx = 0;
         frameGridConstraints.gridy = 2;
@@ -90,11 +98,13 @@ public class FrameHandling {
         frameGridConstraints.weighty = 1;
         frameGridConstraints.gridx = 1;
         frameGridConstraints.gridy = 2;
+        frameGridConstraints.insets.set(0, 0, 0, 10);
         targetFrame.add(usernameInput, frameGridConstraints);
 
         passwordLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-        frameGridConstraints.anchor = GridBagConstraints.CENTER;
-        frameGridConstraints.weightx = 0.5;
+        frameGridConstraints.gridwidth = 1;
+        //frameGridConstraints.anchor = GridBagConstraints.WEST;
+        frameGridConstraints.weightx = 1;
         frameGridConstraints.weighty = 1;
         frameGridConstraints.gridx = 0;
         frameGridConstraints.gridy = 3;
@@ -106,18 +116,21 @@ public class FrameHandling {
         frameGridConstraints.weighty = 1;
         frameGridConstraints.gridx = 1;
         frameGridConstraints.gridy = 3;
+        frameGridConstraints.insets.set(0, 0, 0, 10);
         targetFrame.add(passwordInput, frameGridConstraints);
 
         frameGridConstraints.fill = GridBagConstraints.HORIZONTAL;
         frameGridConstraints.ipady = 5;
         frameGridConstraints.gridx = 0;
         frameGridConstraints.gridy = 4;
+        frameGridConstraints.insets.set(25, 10, 10, 10);
         targetFrame.add(resetButton, frameGridConstraints);
 
         frameGridConstraints.fill = GridBagConstraints.HORIZONTAL;
         frameGridConstraints.ipady = 5;
         frameGridConstraints.gridx = 1;
         frameGridConstraints.gridy = 4;
+        frameGridConstraints.insets.set(25, 10, 10, 10);
         targetFrame.add(submitButton, frameGridConstraints);
 
         targetFrame.setVisible(true);
