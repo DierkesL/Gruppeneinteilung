@@ -41,7 +41,8 @@ public class FrameHandling {
         JPasswordField passwordInput = new JPasswordField();
         JButton submitButton = new JButton("Anmelden");
         JButton resetButton = new JButton("Zurücksetzen");
-
+        usernameInput.setText("testuser");
+        passwordInput.setText("_jnQ_7PPPz7j_LJ5PSCbCg");
         usernameInput.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -156,7 +157,7 @@ public class FrameHandling {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(SessionController.validateSession() == true) {
-                    showGruppeneinteilung();
+                    showDivision(targetFrame);
                 }else{
                     JOptionPane.showMessageDialog(null, "Ungültige Sitzung, bitte erneut anmelden.", "Fehler", JOptionPane.ERROR_MESSAGE);
                     showLogIn(targetFrame);
@@ -230,5 +231,55 @@ public class FrameHandling {
 
     private void showGruppeneinteilung() {
         // Add code for form "Gruppeneinteilung" here
+    }
+
+    private void showDivision(JFrame targetFrame) {
+        targetFrame.getContentPane().removeAll();
+
+        targetFrame.setSize(800, 600);
+        targetFrame.setResizable(false);
+        targetFrame.setIconImage(new ImageIcon(getClass().getResource("Gruppeneinteilung_Icon.png")).getImage());
+        targetFrame.setTitle("Gruppeneinteilung - Aufteilung");
+        targetFrame.setLocationRelativeTo(null);
+        targetFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        targetFrame.setLayout(new BorderLayout());
+
+        var container = targetFrame.getContentPane();
+
+        var headerLabel = new JLabel("Aufteilung");
+        headerLabel.setFont(new Font("Arial", Font.PLAIN, 36));
+        var classLabel = new JLabel("Klasse");
+        var comboBox = new JComboBox();
+        var splitByLabel = new JLabel("Aufteilen nach...");
+
+        var randomRadioBtn = new JRadioButton("Zufällig");
+        var performanceRadioBtn = new JRadioButton("Leistung");
+        var ownWishesRadioBtn = new JRadioButton("Eigene Wünsche");
+        var homogeneousRadioBtn = new JRadioButton("Homogen");
+        var heterogeneousRadioBtn = new JRadioButton("Heterogen");
+
+        var backBtn = new JButton("< Zurück");
+        backBtn.setPreferredSize(new Dimension(100, 35));
+        var nextBtn = new JButton("> Weiter");
+        nextBtn.setPreferredSize(new Dimension(100, 35));
+
+        var panelTop = new JPanel();
+        var panelBottom = new JPanel();
+        var panelCenter = new JPanel();
+        var panel3 = new JPanel();
+        var panel4 = new JPanel();
+        var panel5 = new JPanel();
+
+        panelTop.setLayout(new FlowLayout());
+        panelBottom.setLayout(new FlowLayout(FlowLayout.RIGHT));
+
+        panelTop.add(headerLabel);
+        panelBottom.add(backBtn);
+        panelBottom.add(nextBtn);
+
+        container.add(panelTop, BorderLayout.PAGE_START);
+        container.add(panelCenter, BorderLayout.CENTER);
+        container.add(panelBottom, BorderLayout.PAGE_END);
+        targetFrame.setVisible(true);
     }
 }
