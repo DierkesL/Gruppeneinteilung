@@ -196,7 +196,7 @@ public class FrameHandling {
 
     private void checkCredentials(JFrame targetFrame, String username, JPasswordField password) {
         String passwordFull = "";
-
+        // trimming whitespaces instead?    -  maikoBellic
         for (char passwordChar : password.getPassword()) {
             passwordFull = passwordFull + passwordChar;
         }

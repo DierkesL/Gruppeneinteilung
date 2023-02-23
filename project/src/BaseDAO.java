@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class BaseDAO {
-
+    // super.createDataSoruce();
     public DataSource createDataSource(String user, String password, JSONObject configDatabase) {
         PGSimpleDataSource ds = new PGSimpleDataSource();
         ds.setUrl(configDatabase.get("db_url").toString());
@@ -37,6 +37,7 @@ public class BaseDAO {
 
     public void testQuery() {
         /*
+        todo: fill data in userModel instead
         try {
            DataSource ds = createDataSource(new ApplicationConfig().getConfigJSON(getClass().getResource("config.json").toURI(), "database"));
 
