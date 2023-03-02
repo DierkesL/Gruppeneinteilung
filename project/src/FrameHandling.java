@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
 
+import static java.awt.Component.CENTER_ALIGNMENT;
+
 public class FrameHandling {
 
     JFrame frameLogIn = new JFrame();
@@ -248,15 +250,22 @@ public class FrameHandling {
 
         var headerLabel = new JLabel("Aufteilung");
         headerLabel.setFont(new Font("Arial", Font.PLAIN, 36));
-        var classLabel = new JLabel("Klasse");
+        var classLabel = new JLabel("Klasse", SwingConstants.CENTER);
         var comboBox = new JComboBox();
-        var splitByLabel = new JLabel("Aufteilen nach...");
+        comboBox.setAlignmentY(0);
+        var splitByLabel = new JLabel("Aufteilen nach...", SwingConstants.CENTER);
 
+        var radioBtnGroup = new ButtonGroup();
         var randomRadioBtn = new JRadioButton("Zufällig");
         var performanceRadioBtn = new JRadioButton("Leistung");
         var ownWishesRadioBtn = new JRadioButton("Eigene Wünsche");
         var homogeneousRadioBtn = new JRadioButton("Homogen");
         var heterogeneousRadioBtn = new JRadioButton("Heterogen");
+        radioBtnGroup.add(randomRadioBtn);
+        radioBtnGroup.add(performanceRadioBtn);
+        radioBtnGroup.add(ownWishesRadioBtn);
+        radioBtnGroup.add(homogeneousRadioBtn);
+        radioBtnGroup.add(heterogeneousRadioBtn);
 
         var backBtn = new JButton("< Zurück");
         backBtn.setPreferredSize(new Dimension(100, 35));
@@ -266,20 +275,39 @@ public class FrameHandling {
         var panelTop = new JPanel();
         var panelBottom = new JPanel();
         var panelCenter = new JPanel();
+        var blackline = BorderFactory.createMatteBorder(1, 0, 0, 0, Color.GRAY);
+        panelBottom.setBorder(blackline);
+        var panelCenterSplitPart = new JPanel();
+        panelCenterSplitPart.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         var panel3 = new JPanel();
         var panel4 = new JPanel();
         var panel5 = new JPanel();
 
         panelTop.setLayout(new FlowLayout());
         panelBottom.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        panelCenter.setLayout(new GridLayout(2, 2));
+        panelCenterSplitPart.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         panelTop.add(headerLabel);
+
         panelBottom.add(backBtn);
         panelBottom.add(nextBtn);
+
+        panelCenter.add(classLabel);
+        panelCenter.add(comboBox);
+        panelCenter.add(splitByLabel);
+        panelCenter.add(panelCenterSplitPart);
+
+        panelCenterSplitPart.add(randomRadioBtn);
+        panelCenterSplitPart.add(performanceRadioBtn);
+        panelCenterSplitPart.add(ownWishesRadioBtn);
+        panelCenterSplitPart.add(homogeneousRadioBtn);
+        panelCenterSplitPart.add(heterogeneousRadioBtn);
 
         container.add(panelTop, BorderLayout.PAGE_START);
         container.add(panelCenter, BorderLayout.CENTER);
         container.add(panelBottom, BorderLayout.PAGE_END);
+
         targetFrame.setVisible(true);
     }
 }
