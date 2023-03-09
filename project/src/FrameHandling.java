@@ -1,17 +1,26 @@
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import javax.sql.DataSource;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FrameHandling {
 
     JFrame frameLogIn = new JFrame();
     SessionController sessionController = new SessionController();
+    BaseDAO dao = null;
 
-    public void startApplication(JFrame targetFrame) {
-        Main main = new Main();
+    public void startApplication(JFrame targetFrame, BaseDAO _dao) {
+        dao = _dao;
 
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -196,16 +205,16 @@ public class FrameHandling {
 
     private void checkCredentials(JFrame targetFrame, String username, JPasswordField password) {
         String passwordFull = "";
-        // trimming whitespaces instead?    -  maikoBellic
+
         for (char passwordChar : password.getPassword()) {
             passwordFull = passwordFull + passwordChar;
         }
 
         try {
-            if(sessionController.initializeSession(username, passwordFull)) {
+            if(sessionController.initializeSession(dao.SessionDataSource, username, passwordFull)) {
                 showMainMenu(targetFrame);
             } else {
-                JOptionPane.showMessageDialog(null, "Session konnte nicht erstellt werden.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Ungültiger Benutzername oder ungültiges Passwort.", "Fehler", JOptionPane.ERROR_MESSAGE);
             }
         } catch(Exception ex) {
             if(ex.getMessage().contains("ERROR: password authentication failed for user")) {

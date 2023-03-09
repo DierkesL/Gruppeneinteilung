@@ -5,15 +5,19 @@ import java.net.URISyntaxException;
 
 public class Main {
 
-    static FrameHandling frameHandler = new FrameHandling();
-    static BaseDAO db = new BaseDAO();
-    static JFrame mainFrame = new JFrame();
+    public static FrameHandling frameHandler = new FrameHandling();
+    public static BaseDAO db = new BaseDAO();
+    public static JFrame mainFrame = new JFrame();
 
     public static void main(String[] args) {
         EventQueue.invokeLater(
                 new Runnable() {
                     public void run() {
-                        frameHandler.startApplication(mainFrame);
+                        if(db.initializeDatabaseConnection()) {
+                            frameHandler.startApplication(mainFrame, db);
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Es konnte keine Verbindung zur Datenbank aufgebaut werden.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
         );
