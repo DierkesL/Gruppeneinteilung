@@ -10,7 +10,7 @@ public class TeacherModel extends BaseModel {
         this.password = password;
     }
 
-    public String getPasswordmd() {
+    public String getPassword() {
         return this.password;
     }
 
