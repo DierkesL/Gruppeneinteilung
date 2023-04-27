@@ -164,11 +164,12 @@ public class FrameHandling {
         buttonLeft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                showGruppeneinteilung(targetFrame);
                 if(SessionController.validateSession() == true) {
-                    showGruppeneinteilung();
+                    //showGruppeneinteilung(targetFrame);
                 }else{
-                    JOptionPane.showMessageDialog(null, "Ungültige Sitzung, bitte erneut anmelden.", "Fehler", JOptionPane.ERROR_MESSAGE);
-                    showLogIn(targetFrame);
+                    //JOptionPane.showMessageDialog(null, "Ungültige Sitzung, bitte erneut anmelden.", "Fehler", JOptionPane.ERROR_MESSAGE);
+                    //showLogIn(targetFrame);
                 }
             }
         });
@@ -237,7 +238,113 @@ public class FrameHandling {
         }
     }
 
-    private void showGruppeneinteilung() {
-        // Add code for form "Gruppeneinteilung" here
+    private void showGruppeneinteilung(JFrame targetFrame) {
+        final long serialVersionUID = 1L;
+        JPanel contentPane;
+        JMenuBar menuBar;
+        JMenu menu;
+        JComboBox<String> klasseDropDown;
+        JRadioButton zufaelligRadioButton;
+        JRadioButton leistungRadioButton;
+        JRadioButton eigeneWuenscheRadioButton;
+        JRadioButton homogenRadioButton;
+        JRadioButton heterogenRadioButton;
+
+        targetFrame.setLocationRelativeTo(null);
+
+        targetFrame.setTitle("Aufteilung");
+        targetFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        targetFrame.setBounds(100, 100, 450, 300);
+
+        contentPane = new JPanel();
+        contentPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        contentPane.setLayout(new BorderLayout(0, 10));
+        targetFrame.setContentPane(contentPane);
+
+        // Menubar
+        menuBar = new JMenuBar();
+        JMenu menuItem = new JMenu("Menü");
+        JMenu aufteilungItem = new JMenu("Aufteilung");
+        JMenu verwaltungItem = new JMenu("Verwaltung");
+        JMenu hilfeItem = new JMenu("Hilfe");
+        JMenu ueberunsItem = new JMenu("Über uns");
+        menuBar.add(menuItem);
+        menuBar.add(aufteilungItem);
+        menuBar.add(verwaltungItem);
+        menuBar.add(hilfeItem);
+        menuBar.add(ueberunsItem);
+        targetFrame.setJMenuBar(menuBar);
+
+        // Header Panel
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setPreferredSize(new Dimension(0, 30));
+        JLabel headerLabel = new JLabel("Aufteilung", SwingConstants.CENTER);
+        headerLabel.setFont(new Font("Arial", Font.BOLD, 18));
+
+        headerPanel.add(headerLabel, BorderLayout.CENTER);
+        contentPane.add(headerPanel, BorderLayout.PAGE_START);
+
+        JPanel dropdownPanel = new JPanel(new BorderLayout());
+
+        JLabel klasseLabel = new JLabel("Klasse:");
+        klasseLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        dropdownPanel.add(klasseLabel, BorderLayout.WEST);
+        klasseDropDown = new JComboBox<String>();
+        klasseDropDown.addItem("Klasse 1");
+        klasseDropDown.addItem("Klasse 2");
+        klasseDropDown.addItem("Klasse 3");
+        klasseDropDown.addItem("Klasse 4");
+        //klasseDropDown.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+
+        //dropdownPanel.add(klasseDropDown, BorderLayout.CENTER);
+        contentPane.add(klasseDropDown, BorderLayout.CENTER);
+
+        // Radio Button Panel
+        JPanel radioButtonPanel = new JPanel();
+        radioButtonPanel.setBorder(BorderFactory.createTitledBorder("Aufteilen nach..."));
+        radioButtonPanel.setLayout(new GridLayout(5, 1, 0, 5));
+        zufaelligRadioButton = new JRadioButton("Zufällig");
+        leistungRadioButton = new JRadioButton("Leistung");
+        eigeneWuenscheRadioButton = new JRadioButton("Eigene Wünsche");
+        homogenRadioButton = new JRadioButton("Homogen");
+        heterogenRadioButton = new JRadioButton("Heterogen");
+
+        ButtonGroup radioButtonGroup = new ButtonGroup();
+
+        radioButtonGroup.add(zufaelligRadioButton);
+        radioButtonGroup.add(leistungRadioButton);
+        radioButtonGroup.add(eigeneWuenscheRadioButton);
+        radioButtonGroup.add(homogenRadioButton);
+        radioButtonGroup.add(heterogenRadioButton);
+
+        radioButtonPanel.add(zufaelligRadioButton);
+        radioButtonPanel.add(leistungRadioButton);
+        radioButtonPanel.add(eigeneWuenscheRadioButton);
+        radioButtonPanel.add(homogenRadioButton);
+        radioButtonPanel.add(heterogenRadioButton);
+
+        contentPane.add(radioButtonPanel, BorderLayout.CENTER);
+
+        // Separator
+        contentPane.add(new JSeparator(), BorderLayout.SOUTH);
+
+        // Button Panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(1, 2, 5, 0));
+        buttonPanel.setPreferredSize(new Dimension(0, 40));
+        JButton backButton = new JButton("Abbrechen");
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                targetFrame.setJMenuBar(null);
+                showMainMenu(targetFrame);
+            }
+        });
+
+        buttonPanel.add(backButton);
+        JButton nextButton = new JButton("Weiter >");
+        //nextButton.addActionListener(this);
+        buttonPanel.add(nextButton);
+        contentPane.add(buttonPanel, BorderLayout.PAGE_END);
     }
 }
