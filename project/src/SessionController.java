@@ -9,7 +9,7 @@ public class SessionController {
         username = username.trim();
 
         try {
-            DataSource ds = new BaseDAO().createDataSource(username, password, new ApplicationConfig().getConfigJSON(getClass().getResource("config.json").toURI(), "database"));
+            DataSource ds = new BaseDAO().dbConnector(username, password);
 
             if(ds != null)
             {
