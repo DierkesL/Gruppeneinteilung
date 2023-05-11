@@ -255,7 +255,7 @@ public class FrameHandling {
         final long serialVersionUID = 1L;
         JPanel contentPane;
         JMenuBar menuBar;
-        JMenu menu;
+
         JComboBox<String> klasseDropDown;
         JRadioButton zufaelligRadioButton;
         JRadioButton leistungRadioButton;
@@ -280,12 +280,11 @@ public class FrameHandling {
         JMenu aufteilungItem = new JMenu("Aufteilung");
         JMenu verwaltungItem = new JMenu("Verwaltung");
         JMenu hilfeItem = new JMenu("Hilfe");
-        JMenu ueberunsItem = new JMenu("Über uns");
+
         menuBar.add(menuItem);
         menuBar.add(aufteilungItem);
         menuBar.add(verwaltungItem);
         menuBar.add(hilfeItem);
-        menuBar.add(ueberunsItem);
         targetFrame.setJMenuBar(menuBar);
 
         // Header Panel
@@ -482,6 +481,8 @@ public class FrameHandling {
     }
 
     private void showManagement(JFrame targetFrame) {
+        JMenuBar menuBar;
+
         targetFrame.getContentPane().removeAll();
 
         targetFrame.setSize(800, 600);
@@ -492,6 +493,17 @@ public class FrameHandling {
         targetFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         targetFrame.setLayout(new GridBagLayout());
 
+        // Menubar
+        menuBar = new JMenuBar();
+        JMenu menuItem = new JMenu("Menü");
+        JMenu aufteilungItem = new JMenu("Aufteilung");
+        JMenu verwaltungItem = new JMenu("Verwaltung");
+        JMenu hilfeItem = new JMenu("Hilfe");
+        menuBar.add(menuItem);
+        menuBar.add(aufteilungItem);
+        menuBar.add(verwaltungItem);
+        menuBar.add(hilfeItem);
+        targetFrame.setJMenuBar(menuBar);
         JLabel formTitle = new JLabel("Verwaltung");
         JButton buttonLeft = new JButton("Editieren Schüler");
         JButton buttonCenter = new JButton("Editieren Lehrer");
